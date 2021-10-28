@@ -6,14 +6,17 @@ import javax.persistence.Id;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Column;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "airplane_type")
 public class AirplaneType {
     @Id
+    @NotNull
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @NotNull
     @Column(name = "max_capacity")
     private Integer maxCapacity;
 

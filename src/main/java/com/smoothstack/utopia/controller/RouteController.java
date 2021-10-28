@@ -1,11 +1,12 @@
 package com.smoothstack.utopia.controller;
 
-import com.smoothstack.utopia.NotFoundException;
+import com.smoothstack.utopia.exception.*;
 import com.smoothstack.utopia.entity.Route;
 import com.smoothstack.utopia.service.RouteService;
 
 import java.util.List;
 
+import javax.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.HttpStatus;
@@ -20,7 +21,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.DeleteMapping;
 
 @RestController
-@RequestMapping("/route")
+@RequestMapping("/routes")
 public class RouteController {
 
     private final RouteService service;
@@ -30,7 +31,7 @@ public class RouteController {
     }
 
     @PostMapping
-    public ResponseEntity<Route> create(@RequestBody final Route route) {
+    public ResponseEntity<Route> create(@Valid @RequestBody final Route route) {
         service.save(route);
         return ResponseEntity.ok(route);
     }
@@ -47,9 +48,9 @@ public class RouteController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<String> updateById(@PathVariable final Integer id, @RequestBody final Route route) {
+    public ResponseEntity<String> updateById(@PathVariable final Integer id, @Valid @RequestBody final Route route) {
         if(id != route.getId()) {
-            return new ResponseEntity<String>("Route ids don't match", HttpStatus.BAD_REQUEST);
+            throw new InvalidUpdateIdException();
         }
         final Route _ogRoute = service.selectById(id).orElseThrow(NotFoundException::new);
         service.save(route);

@@ -1,11 +1,12 @@
 package com.smoothstack.utopia.controller;
 
-import com.smoothstack.utopia.NotFoundException;
+import com.smoothstack.utopia.exception.*;
 import com.smoothstack.utopia.entity.Airplane;
 import com.smoothstack.utopia.service.AirplaneService;
 
 import java.util.List;
 
+import javax.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.HttpStatus;
@@ -20,7 +21,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.DeleteMapping;
 
 @RestController
-@RequestMapping("/airplane")
+@RequestMapping("/airplanes")
 public class AirplaneController {
 
     private final AirplaneService service;
@@ -30,7 +31,7 @@ public class AirplaneController {
     }
 
     @PostMapping
-    public ResponseEntity<Airplane> create(@RequestBody final Airplane airplane) {
+    public ResponseEntity<Airplane> create(@Valid @RequestBody final Airplane airplane) {
         service.save(airplane);
         return ResponseEntity.ok(airplane);
     }
@@ -47,9 +48,9 @@ public class AirplaneController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<String> updateById(@PathVariable final Integer id, @RequestBody final Airplane airplane) {
+    public ResponseEntity<String> updateById(@PathVariable final Integer id, @Valid @RequestBody final Airplane airplane) {
         if(id != airplane.getId()) {
-            return new ResponseEntity<String>("Airplane ids don't match", HttpStatus.BAD_REQUEST);
+            throw new InvalidUpdateIdException();
         }
         final Airplane _ogAirplane = service.selectById(id).orElseThrow(NotFoundException::new);
         service.save(airplane);

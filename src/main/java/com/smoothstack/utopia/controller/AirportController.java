@@ -1,11 +1,12 @@
 package com.smoothstack.utopia.controller;
 
-import com.smoothstack.utopia.NotFoundException;
+import com.smoothstack.utopia.exception.*;
 import com.smoothstack.utopia.entity.Airport;
 import com.smoothstack.utopia.service.AirportService;
 
 import java.util.List;
 
+import javax.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.HttpStatus;
@@ -20,7 +21,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.DeleteMapping;
 
 @RestController
-@RequestMapping("/airport")
+@RequestMapping("/airports")
 public class AirportController {
 
     private final AirportService service;
@@ -30,7 +31,7 @@ public class AirportController {
     }
 
     @PostMapping
-    public ResponseEntity<Airport> create(@RequestBody final Airport airport) {
+    public ResponseEntity<Airport> create(@Valid @RequestBody final Airport airport) {
         service.save(airport);
         return ResponseEntity.ok(airport);
     }
@@ -47,9 +48,9 @@ public class AirportController {
     }
 
     @PutMapping("/{code}")
-    public ResponseEntity<String> updateByCode(@PathVariable final String code, @RequestBody final Airport airport) {
+    public ResponseEntity<String> updateByCode(@PathVariable final String code, @Valid @RequestBody final Airport airport) {
         if(code != airport.getCode()) {
-            return new ResponseEntity<String>("Airport codes don't match", HttpStatus.BAD_REQUEST);
+            throw new InvalidUpdateIdException();
         }
         final Airport _ogAirport = service.selectByCode(code).orElseThrow(NotFoundException::new);
         service.save(airport);
@@ -57,7 +58,7 @@ public class AirportController {
     }
 
     @DeleteMapping("/{code}")
-    public ResponseEntity<Void> deleteByCode(@PathVariable final String code) {
+    public ResponseEntity<Void> deleteByCode(@Valid @PathVariable final String code) {
         final Airport airport = service.selectByCode(code).orElseThrow(NotFoundException::new);
         service.delete(airport);
         return ResponseEntity.noContent().build();
