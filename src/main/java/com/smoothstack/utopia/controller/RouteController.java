@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.DeleteMapping;
 
 @RestController
-@RequestMapping("/routes")
+@RequestMapping("/api/routes")
 public class RouteController {
 
     private final RouteService service;

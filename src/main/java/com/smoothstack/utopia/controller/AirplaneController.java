@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.DeleteMapping;
 
 @RestController
-@RequestMapping("/airplanes")
+@RequestMapping("/api/airplanes")
 public class AirplaneController {
 
     private final AirplaneService service;
