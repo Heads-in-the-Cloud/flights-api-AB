@@ -8,13 +8,12 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
+import lombok.AllArgsConstructor;
+
 @Service
+@AllArgsConstructor
 public class AirportService {
     private final AirportDao dao;
-
-    public AirportService(final AirportDao dao) {
-        this.dao = dao;
-    }
 
     public void save(final Airport airport) {
         dao.save(airport);

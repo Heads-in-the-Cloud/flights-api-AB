@@ -9,7 +9,12 @@ import javax.persistence.ManyToOne;
 import javax.persistence.JoinColumn;
 import javax.validation.constraints.NotNull;
 
+import lombok.Getter;
+import lombok.Setter;
+
 @Entity
+@Getter
+@Setter
 @Table(name = "route")
 public class Route {
     @Id
@@ -26,23 +31,4 @@ public class Route {
     @ManyToOne
     @JoinColumn(name = "destination_id")
     private Airport destination;
-
-    public Integer getId() {
-        return id;
-    }
-    public void setId(final Integer id) {
-        this.id = id;
-    }
-    public Airport getOrigin() {
-        return origin;
-    }
-    public void setOrigin(final Airport origin) {
-        this.origin = origin;
-    }
-    public Airport getDestination() {
-        return destination;
-    }
-    public void setDestination(final Airport destination) {
-        this.destination = destination;
-    }
 }

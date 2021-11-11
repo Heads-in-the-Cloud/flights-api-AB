@@ -9,7 +9,12 @@ import javax.persistence.ManyToOne;
 import javax.persistence.JoinColumn;
 import javax.validation.constraints.NotNull;
 
+import lombok.Getter;
+import lombok.Setter;
+
 @Entity
+@Getter
+@Setter
 @Table(name = "airplane")
 public class Airplane {
     @Id
@@ -21,17 +26,4 @@ public class Airplane {
     @ManyToOne
     @JoinColumn(name = "type_id")
     private AirplaneType type;
-
-    public Integer getId() {
-        return id;
-    }
-    public void setId(final Integer id) {
-        this.id = id;
-    }
-    public AirplaneType getType() {
-        return type;
-    }
-    public void setType(final AirplaneType type) {
-        this.type = type;
-    }
 }

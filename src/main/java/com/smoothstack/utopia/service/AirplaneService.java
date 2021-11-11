@@ -8,13 +8,12 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
+import lombok.AllArgsConstructor;
+
 @Service
+@AllArgsConstructor
 public class AirplaneService {
     private final AirplaneDao dao;
-
-    public AirplaneService(final AirplaneDao dao) {
-        this.dao = dao;
-    }
 
     public void save(final Airplane airplane) {
         dao.save(airplane);

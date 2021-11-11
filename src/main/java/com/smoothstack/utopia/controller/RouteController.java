@@ -20,15 +20,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.DeleteMapping;
 
+import lombok.AllArgsConstructor;
+
 @RestController
+@AllArgsConstructor
 @RequestMapping("/api/routes")
 public class RouteController {
 
     private final RouteService service;
-
-    public RouteController(final RouteService service) {
-      this.service = service;
-    }
 
     @PostMapping
     public ResponseEntity<Route> create(@Valid @RequestBody final Route route) {

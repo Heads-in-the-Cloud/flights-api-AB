@@ -8,13 +8,12 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
+import lombok.AllArgsConstructor;
+
 @Service
+@AllArgsConstructor
 public class RouteService {
     private final RouteDao dao;
-
-    public RouteService(final RouteDao dao) {
-        this.dao = dao;
-    }
 
     public void save(final Route route) {
         dao.save(route);

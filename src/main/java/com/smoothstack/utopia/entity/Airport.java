@@ -7,7 +7,12 @@ import javax.persistence.Column;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import lombok.Getter;
+import lombok.Setter;
+
 @Entity
+@Getter
+@Setter
 @Table(name = "airport")
 public class Airport {
     @Id
@@ -19,17 +24,4 @@ public class Airport {
     @NotNull
     @Size(max = 45)
     private String city;
-
-    public String getCode() {
-        return code;
-    }
-    public void setCode(final String code) {
-        this.code = code;
-    }
-    public String getCity() {
-        return city;
-    }
-    public void setCity(final String city) {
-        this.city = city;
-    }
 }
