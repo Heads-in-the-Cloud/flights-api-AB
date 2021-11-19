@@ -17,7 +17,6 @@ import lombok.Setter;
 @Table(name = "airplane_type")
 public class AirplaneType {
     @Id
-    @NotNull
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
