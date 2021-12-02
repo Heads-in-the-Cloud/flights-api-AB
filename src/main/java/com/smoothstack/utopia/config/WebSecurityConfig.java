@@ -17,8 +17,8 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Bean
-    private final EnvVariableConfig envConfig;
+    //@Bean
+    //private final EnvVariableConfig envConfig;
 
     @Override
     protected void configure(final HttpSecurity http) throws Exception {
