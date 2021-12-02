@@ -7,6 +7,7 @@ import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpHeaders;
@@ -27,11 +28,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Arrays;
 
-import lombok.RequiredArgsConstructor;
-
-@RequiredArgsConstructor
 public class AuthorizationFilter extends OncePerRequestFilter {
 
+    @Autowired
     private final EnvVariableConfig envConfig;
 
     @Override
