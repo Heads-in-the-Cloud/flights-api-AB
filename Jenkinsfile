@@ -6,7 +6,7 @@ pipeline {
         stage('Build') {
             steps {
                 sh "./mvnw clean package"
-                sh "docker build . -t austinbaugh/utopia-flights-microservice"
+                sh "docker build . -t austinbaugh/utopia-flights-microservice:${env.BUILD_ID}"
             }
         }
 
@@ -20,9 +20,9 @@ pipeline {
                     --env DB_USERNAME=${env.DB_USERNAME} \
                     --env DB_PASSWORD=${env.DB_PASSWORD} \
                     -p 8100:8080 \
-                    austinbaugh/utopia-flights-microservice
+                    austinbaugh/utopia-flights-microservice:${env.BUILD_ID}
                 sleep 30
-                [ 403 -eq $(curl -X GET -s -o /dev/null -w "%{http_code}" http://localhost:8100/api/bookings) ]
+                [ 403 -eq $(curl -X GET -s -o /dev/null -w '%{http_code}' http://localhost:8100/api/bookings) ]
                 """
             }
         }
