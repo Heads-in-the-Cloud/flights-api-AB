@@ -27,7 +27,9 @@ pipeline {
         }
 
         stage('Test') {
-            sh "./test.sh 8100"
+            steps {
+                sh "./test.sh 8100"
+            }
         }
 
         stage('Kill') {
