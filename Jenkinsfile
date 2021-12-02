@@ -22,6 +22,7 @@ pipeline {
                     -p 8100:8080 \
                     austinbaugh/utopia-flights-microservice:${env.BUILD_ID}
                 sleep 30
+                [ 403 -eq $(curl -X GET -s -o /dev/null -w "%{http_code}" http://localhost:8100/api/bookings) ]
                 """
             }
         }
