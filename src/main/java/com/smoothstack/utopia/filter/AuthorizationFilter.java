@@ -7,7 +7,6 @@ import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpHeaders;
@@ -28,10 +27,12 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Arrays;
 
+import lombok.RequiredArgsConstructor;
+
+@RequiredArgsConstructor
 public class AuthorizationFilter extends OncePerRequestFilter {
 
-    //@Autowired
-    //private final EnvVariableConfig envConfig;
+    private final EnvVariableConfig envConfig;
 
     @Override
     protected void doFilterInternal(
@@ -46,7 +47,7 @@ public class AuthorizationFilter extends OncePerRequestFilter {
             if(authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
                 try {
                     final String token = authorizationHeader.substring("Bearer ".length());
-                    final Algorithm algorithm = Algorithm.HMAC512("temp-secret".getBytes());
+                    final Algorithm algorithm = Algorithm.HMAC512(envConfig.getJwtSecret().getBytes());
                     final JWTVerifier verifier = JWT.require(algorithm).build();
                     final DecodedJWT decodedJWT = verifier.verify(token);
                     final String username = decodedJWT.getSubject();
