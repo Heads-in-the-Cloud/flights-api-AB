@@ -19,6 +19,7 @@ pipeline {
                         --env DB_URL=${env.DB_URL} \
                         --env DB_USERNAME=${env.DB_USERNAME} \
                         --env DB_PASSWORD=${env.DB_PASSWORD} \
+                        --env JWT_SECRET=${env.JWT_SECRET} \
                         -p 8100:8080 \
                         austinbaugh/utopia-flights-microservice:${env.BUILD_ID}
                 """
