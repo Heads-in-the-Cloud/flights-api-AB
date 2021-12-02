@@ -1,5 +1,6 @@
 package com.smoothstack.utopia.config;
 
+import com.smoothstack.utopia.config.EnvVariableConfig;
 import com.smoothstack.utopia.filter.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,9 @@ import lombok.AllArgsConstructor;
 @EnableWebSecurity
 @AllArgsConstructor
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+
+    private final EnvVariableConfig envConfig;
+
     @Override
     protected void configure(final HttpSecurity http) throws Exception {
         http.csrf().disable()
@@ -32,7 +36,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             ).hasAnyAuthority("Admin")
             .anyRequest().authenticated()
             .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-        http.addFilterBefore(new AuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);
+        http.addFilterBefore(new AuthorizationFilter(envConfig), UsernamePasswordAuthenticationFilter.class);
     }
 }
 
