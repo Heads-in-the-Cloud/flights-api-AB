@@ -10,7 +10,7 @@ pipeline {
             }
         }
 
-        stage('Run detached for 45sec') {
+        stage('Run detached for 30sec') {
             steps {
                 sh """
                     docker run -d \
@@ -23,7 +23,7 @@ pipeline {
                         -p 8100:8080 \
                         austinbaugh/utopia-flights-microservice:${env.BUILD_ID}
                 """
-                sh "sleep 45"
+                sh "sleep 30"
             }
         }
 
