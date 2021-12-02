@@ -27,9 +27,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Arrays;
 
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class AuthorizationFilter extends OncePerRequestFilter {
 
     private final EnvVariableConfig envConfig;
