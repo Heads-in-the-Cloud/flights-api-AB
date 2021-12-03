@@ -18,7 +18,7 @@ pipeline {
         stage('Build') {
             steps {
                 script {
-                    image = docker.build("$image_label:$git_commit_hash .")
+                    image = docker.build image_label
                 }
             }
         }
@@ -27,7 +27,7 @@ pipeline {
             steps {
                 script {
                     docker.withRegistry('', 'registry-creds') {
-                        image.push()
+                        image.push("$git_commit_hash")
                         image.push('latest')
                     }
                 }
@@ -38,6 +38,7 @@ pipeline {
             steps {
                 sh "./mvwn clean"
                 sh "docker rmi $image_label:$git_commit_hash"
+                sh "docker rmi $image_label:latest"
             }
         }
     }
