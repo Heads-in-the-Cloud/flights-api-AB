@@ -36,7 +36,7 @@ pipeline {
 
         stage('Clean up') {
             steps {
-                sh "./mvwn clean"
+                sh "./mvnw clean"
                 sh "docker rmi $image_label:$git_commit_hash"
                 sh "docker rmi $image_label:latest"
             }
