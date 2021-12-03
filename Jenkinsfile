@@ -18,7 +18,7 @@ pipeline {
         stage('Build') {
             steps {
                 script {
-                    image = docker.build("$image_label:$git_commit_hash")
+                    image = docker.build("$image_label:$git_commit_hash .")
                 }
             }
         }
