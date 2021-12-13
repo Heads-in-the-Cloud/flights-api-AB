@@ -2,42 +2,43 @@
 pipeline {
     agent any
 
+    environment {
+        image_label = "ab-flights-microservice"
+        git_commit_hash ="${sh(returnStdout: true, script: 'git rev-parse --short=8 HEAD')}"
+        image = ""
+    }
+
     stages {
+        stage('Package') {
+            steps {
+                sh "./mvnw package"
+            }
+        }
+
         stage('Build') {
             steps {
-                sh "./mvnw clean package"
-                sh "docker build . -t austinbaugh/utopia-flights-microservice:${env.BUILD_ID}"
+                script {
+                    image = docker.build image_label
+                }
             }
         }
 
-        stage('Run detached for 30sec') {
+        stage('Push to registry') {
             steps {
-                sh """
-                    docker run -d \
-                        --rm \
-                        --name flights-microservice \
-                        --env DB_URL=${env.DB_URL} \
-                        --env DB_USERNAME=${env.DB_USERNAME} \
-                        --env DB_PASSWORD=${env.DB_PASSWORD} \
-                        --env JWT_SECRET=${env.JWT_SECRET} \
-                        -p 8100:8080 \
-                        austinbaugh/utopia-flights-microservice:${env.BUILD_ID}
-                """
-                sh "sleep 30"
+                script {
+                    docker.withRegistry(FLIGHTS_ECR_URI, 'ecr:us-west-2:ecr-creds') {
+                        image.push("$git_commit_hash")
+                        image.push('latest')
+                    }
+                }
             }
         }
 
-        stage('Test') {
+        stage('Clean up') {
             steps {
-                sh "./test.sh 8100"
-            }
-        }
-
-        stage('Kill') {
-            steps {
-                sh "docker kill flights-microservice"
+                sh "./mvnw clean"
+                sh "docker rmi $image_label"
             }
         }
     }
 }
-
