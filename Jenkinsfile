@@ -11,7 +11,7 @@ pipeline {
     stages {
         stage('Package') {
             steps {
-                sh "./mvnw package"
+                sh "./mvnw clean package"
             }
         }
 
@@ -27,7 +27,7 @@ pipeline {
             steps {
                 script {
                     docker.withRegistry('', 'registry-creds') {
-                        image.push()
+                        image.push("$git_commit_hash")
                         image.push('latest')
                     }
                 }
@@ -35,8 +35,7 @@ pipeline {
         }
 
         stage('Clean up') {
-            sh "./mvwn clean"
-            sh "docker rmi $image_label:$git_commit_hash"
+            sh "docker rmi $image_label"
         }
     }
 }
