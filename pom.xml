@@ -14,7 +14,7 @@
 
   <groupId>com.smoothstack.utopia</groupId>
   <artifactId>flights-microservice</artifactId>
-  <version>0.0.4-SNAPSHOT</version>
+  <version>0.0.5-SNAPSHOT</version>
   <packaging>jar</packaging>
   <name>flights-microservice</name>
   <properties>
