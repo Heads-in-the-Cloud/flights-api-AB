@@ -13,10 +13,10 @@
   </parent>
 
   <groupId>com.smoothstack.utopia</groupId>
-  <artifactId>flights-microservice</artifactId>
+  <artifactId>flights-microservice-AB</artifactId>
   <version>0.0.5-SNAPSHOT</version>
   <packaging>jar</packaging>
-  <name>flights-microservice</name>
+  <name>flights-microservice-AB</name>
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
