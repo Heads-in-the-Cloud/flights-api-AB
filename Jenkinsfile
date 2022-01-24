@@ -58,9 +58,16 @@ pipeline {
             steps {
                 script {
                     ecr_repo_uri = "$ECR_URI/$image_label"
-                    docker.withRegistry(ecr_repo_uri, "ecr:$AWS_REGION:ecr-creds") {
-                        image.push("$commit")
-                        image.push('latest')
+                    withCredentials([[
+                        $class: 'AmazonWebServicesCredentialsBinding',
+                        credentialsId: "aws-key",
+                        accessKeyVariable: 'AWS_ACCESS_KEY_ID',
+                        secretKeyVariable: 'AWS_SECRET_ACCESS_KEY'
+                    ]]) {
+                        docker.withRegistry(ecr_repo_uri, "ecr:$AWS_REGION:ecr-creds") {
+                            image.push("$commit")
+                            image.push('latest')
+                        }
                     }
                 }
             }
