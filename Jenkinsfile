@@ -19,6 +19,8 @@ pipeline {
         stage('Package') {
             steps {
                 sh "./mvnw package"
+                sh "docker context use default"
+                sh "aws ecr get-login-password --region ${AWS_REGION} | docker login --username AWS --password-stdin ${ECR_URI}"
             }
 
             post {
@@ -57,8 +59,6 @@ pipeline {
         stage('Push to registry') {
             steps {
                 script {
-                    sh "docker context use default"
-                    sh "aws ecr get-login-password --region ${AWS_REGION} | docker login --username AWS --password-stdin ${ECR_URI}"
                     docker.withRegistry("$ECR_URI/$image_label", "ecr:$AWS_REGION:ecr-creds") {
                         image.push("$COMMIT_HASH")
                         image.push('latest')
