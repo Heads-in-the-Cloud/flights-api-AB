@@ -1,6 +1,6 @@
 #!groovy
 pipeline {
-    agent { label 'aws-ready' }
+    agent any
 
     environment {
         COMMIT_HASH = sh(returnStdout: true, script: "git rev-parse --short=8 HEAD").trim()
@@ -57,8 +57,10 @@ pipeline {
         stage('Push to registry') {
             steps {
                 script {
+                    sh "docker context use default"
+                    sh "aws ecr get-login-password --region ${AWS_REGION} | docker login --username AWS --password-stdin ${ECR_URI}"
                     docker.withRegistry("$ECR_URI/$image_label", "ecr:$AWS_REGION:ecr-creds") {
-                        image.push("$commit")
+                        image.push("$COMMIT_HASH")
                         image.push('latest')
                     }
                 }
