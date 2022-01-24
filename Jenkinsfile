@@ -57,9 +57,7 @@ pipeline {
         stage('Push to registry') {
             steps {
                 script {
-                    ecr_repo_uri = "$ECR_URI/$image_label"
-                    sh "aws ecr get-login-password --region ${aws_region} | docker login --username AWS --password-stdin $ECR_URI"
-                    docker.withRegistry(ecr_repo_uri, "ecr:$AWS_REGION:ecr-creds") {
+                    docker.withRegistry("$ECR_URI/$image_label", "ecr:$AWS_REGION:ecr-creds") {
                         image.push("$commit")
                         image.push('latest')
                     }
