@@ -1,6 +1,6 @@
 #!groovy
 pipeline {
-    agent any
+    agent { label 'aws-ready' }
 
     environment {
         COMMIT_HASH = sh(returnStdout: true, script: "git rev-parse --short=8 HEAD").trim()
