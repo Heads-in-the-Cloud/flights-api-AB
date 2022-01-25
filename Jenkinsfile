@@ -59,7 +59,11 @@ pipeline {
         stage('Push to registry') {
             steps {
                 script {
-                    docker.withRegistry("$ECR_URI/$image_label", "ecr:$AWS_REGION:ecr-creds") {
+                    echo "$AWS_ACCESS_KEY_ID"
+                    docker.withRegistry(
+                        "$ECR_URI/$image_label",
+                        "ecr:$AWS_REGION:ecr-creds"
+                    ) {
                         image.push("$COMMIT_HASH")
                         image.push('latest')
                     }
