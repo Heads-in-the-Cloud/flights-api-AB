@@ -59,7 +59,7 @@ pipeline {
             steps {
                 script {
                     docker.withRegistry(
-                        "$ECR_URI/$image_label",
+                        "http://$ECR_URI/$image_label",
                         "ecr:$AWS_REGION:jenkins"
                     ) {
                         image.push("$COMMIT_HASH")
