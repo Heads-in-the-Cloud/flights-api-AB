@@ -64,10 +64,10 @@ pipeline {
                         accessKeyVariable: 'AWS_ACCESS_KEY_ID',
                         secretKeyVariable: 'AWS_SECRET_ACCESS_KEY'
                     ]]) {
-                        sh "aws ecr get-login-password --region ${AWS_REGION} | docker login --username AWS --password-stdin ${ECR_URI}"
-                        echo "$AWS_ACCESS_KEY_ID"
+                        echo "$ECR_URI/$image_label"
+                        echo "${ECR_URI}/${image_label}"
                         docker.withRegistry(
-                            "https://$ECR_URI/$image_label",
+                            "${ECR_URI}/${image_label}",
                             "ecr:$AWS_REGION:ecr-creds"
                         ) {
                             image.push("$COMMIT_HASH")
