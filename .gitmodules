@@ -1,3 +1,0 @@
-[submodule "springboot-ecr-cd"]
-	path = springboot-ecr-cd
-	url = git@github.com:Heads-in-the-Cloud/springboot-ecr-cd-AB.git
