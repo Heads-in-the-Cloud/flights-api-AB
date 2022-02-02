@@ -21,6 +21,9 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <java.version>11</java.version>
+    <sonar.buildString>
+      <sonar.host.url>http://jenkins2.hitwc.link:9000</sonar.host.url>
+    </sonar.buildString>
   </properties>
 
   <dependencies>
@@ -91,6 +94,11 @@
             </exclude>
           </excludes>
         </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.sonarsource.scanner.maven</groupId>
+        <artifactId>sonar-maven-plugin</artifactId>
+        <version>3.7.0.1746</version>
       </plugin>
     </plugins>
   </build>
