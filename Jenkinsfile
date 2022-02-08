@@ -1,4 +1,4 @@
 #!groovy
-@Library('springboot-ecr-pipeline@UTOPIA-79')_
+@Library('springboot-ecr-pipeline@UTOPIA-82')_
 
 runPipeline()
